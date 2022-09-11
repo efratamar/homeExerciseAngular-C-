@@ -10,6 +10,8 @@ import { defaults as defaultControls } from 'ol/control';
 import { LocationService } from "../location.service"
 import { Coordinate }from "../Coordinate";
 import { Data } from "../Data";
+import Target from 'ol/events/Target';
+import { splitAtColon } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-map',
@@ -54,8 +56,8 @@ export class MapComponent implements OnInit {
   onClick(){
     debugger;
     let coors:Coordinate[]=[];
-    coors.push(new Coordinate(16.345,15.656561));
-    coors.push(new Coordinate(12.345,1.55551));
+    let pos=document.getElementsByClassName('custom-mouse-position');
+    coors.push(new Coordinate(Number(pos[0].textContent?.split(",")[0]),Number(pos[0].textContent?.split(",")[1])));
     let data=new Data(new Date().toISOString(),coors);
     this.locSer.Post(data).subscribe(()=>{alert("succes!")},()=>{alert("error!")});
   }
